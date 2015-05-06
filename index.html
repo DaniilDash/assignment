@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			.multi-select {
+				margin-left: 8px!important;
+			}
+			.action-button {
+				margin-left: 23px;
+			}
+		</style>
+		<link rel="stylesheet" type="text/css" href="bootstrap.css">
+		<script src="react.js"></script>
+		<script src="jquery.js"></script>
+		<script src="JSXTransformer.js"></script>
+	</head>
+	<body>
+		<script type="text/jsx">
+			var Table = React.createClass({
+				render: function(){
+					return (
+					<div className="panel-body">
+						<table className="table">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>First Name</th>
+									<th>Last Name</th>
+									<th>Username</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<th scope="row"><input type="checkbox" value="1" id="ch1" /></th>
+									<td>Mark</td>
+									<td>Otto</td>
+									<td>@mdo</td>
+								</tr>
+								<tr>
+									<th scope="row"><input type="checkbox" value="2" id="ch2" /></th>
+									<td>Jacob</td>
+									<td>Thornton</td>
+									<td>@fat</td>
+								</tr>
+								<tr>
+									<th scope="row"><input type="checkbox" value="3" id="ch3" /></th>
+									<td>Larry</td>
+									<td>the Bird</td>
+									<td>@twitter</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					);
+				}
+			});
+			
+			var MainCheckBox = React.createClass({
+				MultiSelFunc: function(){
+					if($('#multi').prop('checked')==true){
+						$('#ch1').prop('checked', true);
+						$('#ch2').prop('checked', true);
+						$('#ch3').prop('checked', true);
+					}
+					else{
+						$('#ch1').prop('checked', false);
+						$('#ch2').prop('checked', false);
+						$('#ch3').prop('checked', false);
+					}
+				},
+				render: function(){
+					return (
+						<input className="multi-select" type="checkbox" id="multi" onChange={this.MultiSelFunc} />
+					);
+				}
+			});
+			
+			var ButtonSubmit = React.createClass({
+				SubFunc: function(){
+					var answer=[];
+					for(var i=1;i<=$('.panel-body :input').length;++i){
+						if($('#ch'+i).prop('checked')==true){
+							answer[answer.length]=($('#ch'+i).attr('id'));
+						}
+					}
+					console.log(answer);
+				},
+				render: function(){
+					return (
+						<button className="btn btn-default action-button" type="submit" onClick={this.SubFunc}>Show selected id's</button>
+					);
+				}
+			});
+			
+			var HeadingPanel = React.createClass({
+				render: function(){
+					return (
+						<div className="panel-heading">
+							<MainCheckBox />
+							<ButtonSubmit />
+						</div>
+					);
+				}
+			})
+			
+			var MainDiv = React.createClass({
+				render: function(){
+					return (
+						<div className="panel panel-default">
+							<HeadingPanel />
+							<Table />
+						</div>
+					);
+				}
+			})
+			React.render(<MainDiv />,document.body);
+		</script>
+	</body>
+</html>
